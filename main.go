@@ -37,5 +37,5 @@ func main() {
 	fmt.Println("server running localhost:" + port)
 	// http.ListenAndServe("localhost:5000", r)
 
-	http.ListenAndServe("containers-us-west-127.railway.app:"+port, handlers.CORS(AllowedHeaders, AllowedMethods, AllowedOrigins)(r))
+	http.ListenAndServe(":"+port, handlers.CORS(AllowedHeaders, AllowedMethods, AllowedOrigins)(r))
 }
