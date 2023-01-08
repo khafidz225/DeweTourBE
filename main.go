@@ -17,7 +17,7 @@ func main() {
 
 	errNev := godotenv.Load()
 	if errNev != nil {
-		panic("Failed to load env file")
+		fmt.Println(errNev)
 	}
 
 	mysql.DatabaseInit()
