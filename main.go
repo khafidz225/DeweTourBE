@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-
+//incometrip
 	errNev := godotenv.Load()
 	if errNev != nil {
 		fmt.Println(errNev)
