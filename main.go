@@ -32,9 +32,9 @@ func main() {
 	AllowedMethods := handlers.AllowedMethods([]string{"GET", "POST", "PATCH", "DELETE"})
 	var AllowedOrigins = handlers.AllowedOrigins([]string{"*"})
 
-	var port = "5000"
+	var port = "7467"
 	fmt.Println("server running localhost:" + port)
 	// http.ListenAndServe("localhost:5000", r)
 
-	http.ListenAndServe("localhost:"+port, handlers.CORS(AllowedHeaders, AllowedMethods, AllowedOrigins)(r))
+	http.ListenAndServe("containers-us-west-127.railway.app:"+port, handlers.CORS(AllowedHeaders, AllowedMethods, AllowedOrigins)(r))
 }
