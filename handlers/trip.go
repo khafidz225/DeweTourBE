@@ -20,6 +20,7 @@ var path_file = os.Getenv("PATH_FILE")
 type handlerTrip struct {
 	TripRepository repositories.TripRepository
 }
+//
 
 // Untuk menampung Function menjadi satu
 func HandlerTrip(TripRepository repositories.TripRepository) *handlerTrip {
