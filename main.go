@@ -2,6 +2,7 @@ package main
 
 import (
 	"deweTourBE/database"
+	"os"
 	// "deweTourBE/handlers"
 	"deweTourBE/pkg/mysql"
 	"deweTourBE/routes"
@@ -32,7 +33,7 @@ func main() {
 	AllowedMethods := handlers.AllowedMethods([]string{"GET", "POST", "PATCH", "DELETE"})
 	var AllowedOrigins = handlers.AllowedOrigins([]string{"*"})
 
-	var port = "7467"
+	var port = os.Getenv("PORT")
 	fmt.Println("server running localhost:" + port)
 	// http.ListenAndServe("localhost:5000", r)
 
