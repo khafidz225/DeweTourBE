@@ -15,7 +15,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var path_file = os.Getenv("PATH_FILE")
+var path_file = "http://localhost:5000/uploads/"
 
 type handlerTrip struct {
 	TripRepository repositories.TripRepository
@@ -86,7 +86,7 @@ func (h *handlerTrip) CreateTrip(w http.ResponseWriter, r *http.Request) {
 	}
 
 	dataContex := r.Context().Value("dataFile")
-	filename := path_file + dataContex.(string)
+	filename := dataContex.(string)
 	// filename = `http://localhost:5000/api/v1/` + filename
 
 	country_id, _ := strconv.Atoi(r.FormValue("country_id"))
