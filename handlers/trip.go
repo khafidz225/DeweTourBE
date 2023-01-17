@@ -15,7 +15,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var path_file = "http://localhost:5000/uploads/"
+//var path_file = "http://localhost:5000/uploads/"
 
 type handlerTrip struct {
 	TripRepository repositories.TripRepository
@@ -124,6 +124,16 @@ func (h *handlerTrip) CreateTrip(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(response)
 		return
 	}
+	
+	var ctx = context.Background()
+	var CLOUD_NAME = "dfxarsquq"
+	var API_KEY = "424662388976554"
+	var API_SECRET = "izwGO6NvRBu5pNVJoPyp2j1oNC4"
+
+	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
+
+	resp, err := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "DeweTour"})
+	fmt.Println(resp.SecureURL)
 
 	//mengambil dari models trip
 	trip := models.Trip{
@@ -138,7 +148,7 @@ func (h *handlerTrip) CreateTrip(w http.ResponseWriter, r *http.Request) {
 		Price:          request.Price,
 		Quota:          request.Quota,
 		Description:    request.Description,
-		Image:          filename,
+		Image:          resp.SecureURL,
 	}
 
 	data, err := h.TripRepository.CreateTrip(trip)
