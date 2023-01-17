@@ -179,12 +179,21 @@ func (h *handlerTrip) UpdateTrip(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Countent-type", "application/json")
 
 	dataContex := r.Context().Value("dataFile")
-	filename := dataContex.(string)
+	filepath := dataContex.(string)
 
 	request := tripdto.UpdateTripRequest{
-
-		Image: filename,
+		Image: filepath,
 	}
+
+	var ctx = context.Background()
+	var CLOUD_NAME = "dfxarsquq"
+	var API_KEY = "424662388976554"
+	var API_SECRET = "izwGO6NvRBu5pNVJoPyp2j1oNC4"
+
+	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
+
+	resp, err := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "DeweTour"})
+	fmt.Println(resp.SecureURL)
 
 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
 	trip, err := h.TripRepository.GetTrip(int(id))
