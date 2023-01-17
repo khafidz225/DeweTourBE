@@ -37,7 +37,7 @@ func UploadFile(next http.HandlerFunc) http.HandlerFunc {
 		tempFile.Write(fileBytes)
 
 		data := tempFile.Name()
-		filename := data[8:] // uploads/image-1237676812368wahyu.png (Mengurangi 8 huruf dari depan)
+		//filename := data[8:]  uploads/image-1237676812368wahyu.png (Mengurangi 8 huruf dari depan)
 
 		ctx := context.WithValue(r.Context(), "dataFile", filename)
 		next.ServeHTTP(w, r.WithContext(ctx))
