@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	dto "deweTourBE/dto/result"
 	tripdto "deweTourBE/dto/trip"
 	"deweTourBE/models"
@@ -22,6 +23,7 @@ import (
 type handlerTrip struct {
 	TripRepository repositories.TripRepository
 }
+
 //
 
 // Untuk menampung Function menjadi satu
@@ -35,7 +37,7 @@ func (h *handlerTrip) FindTrip(w http.ResponseWriter, r *http.Request) {
 	trip, err := h.TripRepository.FindTrip()
 	// Image
 	for i, p := range trip {
-		trip[i].Image = path_file + p.Image
+		trip[i].Image = p.Image
 	}
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -62,7 +64,7 @@ func (h *handlerTrip) GetTrip(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(response)
 		return
 	}
-	trip.Image = path_file + trip.Image
+	trip.Image = trip.Image
 
 	w.WriteHeader(http.StatusOK)
 	response := dto.SuccessResult{Code: http.StatusOK, Data: trip}
@@ -88,7 +90,7 @@ func (h *handlerTrip) CreateTrip(w http.ResponseWriter, r *http.Request) {
 	}
 
 	dataContex := r.Context().Value("dataFile")
-	filename := dataContex.(string)
+	filepath := dataContex.(string)
 	// filename = `http://localhost:5000/api/v1/` + filename
 
 	country_id, _ := strconv.Atoi(r.FormValue("country_id"))
@@ -108,7 +110,6 @@ func (h *handlerTrip) CreateTrip(w http.ResponseWriter, r *http.Request) {
 		Price:          Price,
 		Quota:          Quota,
 		Description:    r.FormValue("description"),
-		Image:          filename,
 	}
 	// if err := json.NewDecoder(r.).Decode(&request); err != nil {
 	// 	w.WriteHeader(http.StatusBadRequest)
@@ -126,7 +127,7 @@ func (h *handlerTrip) CreateTrip(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(response)
 		return
 	}
-	
+
 	var ctx = context.Background()
 	var CLOUD_NAME = "dfxarsquq"
 	var API_KEY = "424662388976554"
