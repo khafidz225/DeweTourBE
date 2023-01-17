@@ -246,7 +246,7 @@ func (h *handlerTrip) UpdateTrip(w http.ResponseWriter, r *http.Request) {
 	// dataContex := r.Context().Value("dataFile")
 	// filename := dataContex.(string)
 	if request.Image != "" {
-		trip.Image = request.Image
+		trip.Image = resp.SecureURL
 	}
 
 	data, err := h.TripRepository.UpdateTrip(trip)
